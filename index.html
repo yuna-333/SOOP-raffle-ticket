@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>이비디자인 100칸 방송용 뽑기판</title>
     <style>
-        /* 폰트 정의: 학교안심 둥근미소 */
         @font-face {
             font-family: 'SchoolSafetyRoundedSmile';
             src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimDunggeunmisoTTF-B.woff2') format('woff2');
@@ -167,7 +166,7 @@
 
         <div class="sidebar">
             <button class="all-flip-btn" id="megaFlipBtn" onclick="triggerMegaFlip()">
-                <span class="btn-text">⚡판찢 10000개</span>
+                <span class="btn-text">⚡판찢 12486개</span>
             </button>
             <div class="prize-header">
                 <h3 class="prize-title">💖100개 뽑기판💖</h3>
@@ -221,7 +220,6 @@
     let currentRewards = [];
     let isAnimating = false;
 
-    // 오디오 파일 경로는 환경에 맞게 수정하여 사용하세요.
     const flipSound = new Audio("flip.mp3");
     const winSound = new Audio("win.mp3");
 
@@ -261,14 +259,14 @@
     }
 
     function loadPresetPrizes() {
-        prizeArray = ["정성방셀", "일반방셀", "역팬50개", "볼하트", "윙크"];
+        prizeArray = ["식데/소원권", "카톡", "정성방셀", "랜덤시그댄스", "윙크"];
         renderPrizeList();
     }
 
     function renderPrizeList() {
         prizeList.innerHTML = "";
         if (prizeArray.length === 0) {
-            prizeList.innerHTML = "<li class='prize-item' style='color:#db2777; font-weight:bold; justify-content:center;'>준비 중 입니다.</li>";
+            prizeList.innerHTML = "<li class='prize-item' style='color:#db2777; font-weight:bold; justify-content:center;'>상품을 입력해주세요.</li>";
             return;
         }
         prizeArray.forEach((prize, index) => {

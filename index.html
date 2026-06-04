@@ -28,9 +28,10 @@
             font-weight: normal; 
             display: flex; 
             justify-content: flex-start; 
-            align-items: center; 
+            align-items: flex-start; 
             height: 100vh; 
             margin: 0; 
+            padding-top: 60px;
             padding-left: 20px;
             overflow: hidden; 
         }
@@ -130,7 +131,7 @@
 
         .prize-header { display: flex; justify-content: center; align-items: center; border-bottom: 2px dashed #FFA1D8; padding-bottom: 8px; margin: 0; }
         .prize-title { font-size: 20px; color: #db2777; margin: 0; }
-        .prize-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; max-height: 280px; overflow-y: auto; }
+        .prize-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; height: auto; }
         .prize-item { background: #FFC9E8; padding: 6px 10px; border-radius: 6px; font-size: 16px; border-left: 4px solid #FFC9E8; display: flex; gap: 5px; align-items: center; }
         .prize-item.rank-1 { border-left-color: #db2777; }
         .prize-item.rank-2 { border-left-color: #f472b6; }
@@ -141,7 +142,10 @@
         .admin-wrapper { width: 250px; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), width 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease; opacity: 1; overflow: hidden; flex-shrink: 0; }
         .admin-wrapper.collapsed { width: 0px; opacity: 0; transform: scaleX(0); pointer-events: none; }
         
-        /* 설정창 영역 폰트 변경 */
+        #mainContainer.admin-swapped .admin-wrapper.collapsed {
+            width: 250px;
+        }
+
         .admin-answer-section { 
             width: 250px; 
             background: linear-gradient(135deg, #fff1f2ba, #fbcfe8);
@@ -162,22 +166,16 @@
         .opacity-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #db2777; cursor: pointer; }
         .admin-section-inner h5 { margin: 0 0 6px 0; color: #db2777; font-size: 13px; font-weight: normal; }
         .input-group { display: flex; gap: 4px; margin-bottom: 6px; width: 100%; }
-        
-        /* 입력바 폰트 변경 */
         .input-bar { flex: 1; min-width: 0; background: #ffffff; color: #db2777; border: 1px solid #FFC9E8; border-radius: 6px; padding: 6px; font-size: 13px; font-family: 'NexonLv1Gothic', sans-serif; }
         .control-btns { display: flex; gap: 4px; flex-shrink: 0; }
-        
-        /* 설정창 내 버튼들 폰트 변경 */
         .add-btn, .clear-btn, .preset-btn, .shuffle-btn, .reset-page-btn { cursor: pointer; font-family: 'NexonLv1Gothic', sans-serif; }
-        
         .add-btn { background: linear-gradient(180deg, #fbcfe8, #FF96D3); color: white; border: none; padding: 0 10px; border-radius: 6px; }
         .clear-btn { background: #ffffff; color: #db2777; border: 1px solid #FFC9E8; padding: 0 10px; border-radius: 6px; }
         .preset-btn { width: 100%; background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e40af; border: 1px solid #60a5fa; padding: 7px; border-radius: 6px; margin-bottom: 6px; }
         .shuffle-btn { width: 100%; background: linear-gradient(180deg, #fbcfe8, #FF96D3); color: white; text-shadow: 0 0 5px #ff49b2, 0 0 5px #ff49b2; border: 1px solid #fff; padding: 8px; border-radius: 6px; margin-bottom: 6px;}
         .reset-page-btn { width: 100%; background: red; color: #fff; border: 1px solid #FFC9E8; padding: 8px; border-radius: 6px; font-size: 13px; }
         .reset-page-btn:hover { background: #FFC9E8; color: white; }
-        
-        .answer-grid { display: flex; flex-direction: column; gap: 5px; max-height: 150px; overflow-y: auto; font-size: 13px; color: #db2777; margin-top: 5px; border-top: 1px dashed rgba(219, 39, 119, 0.3); padding-top: 8px; }
+        .answer-grid { display: flex; flex-direction: column; gap: 5px; height: auto; font-size: 13px; color: #db2777; margin-top: 5px; border-top: 1px dashed rgba(219, 39, 119, 0.3); padding-top: 8px; }
         .answer-row { display: flex; justify-content: space-between; align-items: center; background: rgba(255, 255, 255, 0.7); padding: 6px 10px; border-radius: 6px; }
         .ans-rank { color: #d01567; }
         .ans-num { color: #ffffff; background: #db2777; padding: 2px 7px; border-radius: 4px; font-size: 12px; }
@@ -232,7 +230,7 @@
                     <button class="reset-page-btn" onclick="location.reload()">전체 새로고침<br> (⚠️좌우 포함 초기화 됩니다.)</button>
                 </div>
                 <div class="answer-grid" id="answerGrid">
-                    <div style="text-align: center; color: #f472b6; font-size: 12px; padding: 15px 0; line-height: 1.4;">위의 셔플 버튼을 누르면<br>당첨 번호 정답지가 출력됩니다.</div>
+                    <div style="text-align: center; color: #f472b6; font-size: 12px; line-height: 1.4;">위의 셔플 버튼을 누르면<br>당첨 번호 정답지가 출력됩니다.</div>
                 </div>
             </div>
         </div>
@@ -277,11 +275,13 @@
         isSwapped = !isSwapped;
         const leftPanel = document.getElementById('leftPanel');
         const rightPanel = document.getElementById('rightPanel');
+        const mainContainer = document.getElementById('mainContainer');
          
         const boardToggle = document.getElementById('boardToggleContainer');
         const adminToggle = document.getElementById('adminToggleContainer');
 
         if (isSwapped) {
+            mainContainer.classList.add('admin-swapped');
             leftPanel.style.order = "3";
             rightPanel.style.order = "1";
              
@@ -291,6 +291,7 @@
             boardToggle.style.order = "1";
             board.style.order = "2";
         } else {
+            mainContainer.classList.remove('admin-swapped');
             leftPanel.style.order = "1";
             rightPanel.style.order = "3";
              
@@ -305,11 +306,11 @@
 
     function updateToggleArrows() {
         if (!isSwapped) {
-            toggleBtn.innerText = board.classList.contains('collapsed') ? "▶" : "◀";
-            adminToggleBtn.innerText = adminWrapper.classList.contains('collapsed') ? "◀" : "▶";
+            toggleBtn.innerText = board.classList.contains('collapsed') ? "＞" : "＜";
+            adminToggleBtn.innerText = adminWrapper.classList.contains('collapsed') ? "＜" : "＞";
         } else {
-            toggleBtn.innerText = board.classList.contains('collapsed') ? "◀" : "▶";
-            adminToggleBtn.innerText = adminWrapper.classList.contains('collapsed') ? "▶" : "◀";
+            toggleBtn.innerText = board.classList.contains('collapsed') ? "＜" : "＞";
+            adminToggleBtn.innerText = adminWrapper.classList.contains('collapsed') ? "＞" : "＜";
         }
     }
 
@@ -342,7 +343,7 @@
     function renderPrizeList() {
         prizeList.innerHTML = "";
         if (prizeArray.length === 0) {
-            prizeList.innerHTML = "<li class='prize-item' style='color:#db2777; font-weight:bold; justify-content:center;'>상품을 입력해주세요.</li>";
+            prizeList.innerHTML = "<li class='prize-item' style='color:#db2777; font-weight:bold; justify-content:center; background: transparent; border: none;'>상품을 입력해주세요.</li>";
             return;
         }
         prizeArray.forEach((prize, index) => {
@@ -475,7 +476,7 @@
             }
         }
         if (targetCount === 0) {
-            answerGrid.innerHTML = "<div style='text-align: center; color: #db2777; font-size: 12px; padding: 20px 0; line-height:1.4;'>현재 배치된 당첨 상품이 없습니다.<br>프리셋 가져오기 또는 상품을 추가하여<br>'뽑기판 시작하기' 버튼을 눌러주세요.<br><br>뽑기판 제작 [카카오톡채널 이비디자인]</div>";
+            answerGrid.innerHTML = "<div style='text-align: center; color: #db2777; font-size: 12px; line-height: 1.4;'>위의 셔플 버튼을 누르면<br>당첨 번호 정답지가 출력됩니다.</div>";
         }
     }
 

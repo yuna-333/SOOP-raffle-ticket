@@ -5,7 +5,7 @@
     <title>이비디자인 100칸 방송용 뽑기판</title>
     <style>
         @font-face {
-            font-family: 'Memoment';
+            font-family: 'MemomentKkukkukk';
             src: url('./fonts/MemomentKkukkukk.woff2') format('woff2');
             font-weight: normal;
             font-display: swap;
@@ -16,7 +16,7 @@
         body { 
             background-color: rgba(0,0,0,0);
             color: white; 
-            font-family: 'Memoment', 'Malgun Gothic', sans-serif; 
+            font-family: 'MemomentKkukkukk', 'Malgun Gothic', sans-serif; 
             font-weight: normal; 
             display: flex; 
             justify-content: flex-start; 
@@ -95,7 +95,7 @@
         .card-container { perspective: 1000px; width: 100%; height: 100%; cursor: pointer; user-select: none; }
         .card { width: 100%; height: 100%; position: relative; transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); transform-style: preserve-3d; transform-origin: center center; }
         .card.flipped { transform: rotateY(180deg); }
-        .card-face { position: absolute; width: 100%; height: 100%; border-radius: 6px; display: flex; justify-content: center; align-items: center; font-size: 16px; backface-visibility: hidden; border: 1px solid transparent; font-family: 'Memoment', sans-serif; top: 0; left: 0; }
+        .card-face { position: absolute; width: 100%; height: 100%; border-radius: 6px; display: flex; justify-content: center; align-items: center; font-size: 16px; backface-visibility: hidden; border: 1px solid transparent; font-family: 'MemomentKkukkukk', sans-serif; top: 0; left: 0; }
         .card-front { background: linear-gradient(135deg, #fff1f2, #fbcfe8); box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.8), 0 0 4px rgba(244, 114, 182, 0.3); border-color: rgba(255, 255, 255, 0.6); color: #db2777; position: relative; overflow: hidden; }
         .card-front::after { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, rgba(255,0,128,0) 30%, rgba(255,255,255,0.8) 50%, rgba(0,128,255,0) 70%); transform: rotate(45deg) translate(-150%, -150%); transition: none; pointer-events: none; }
         .card.slot-glow .card-front::after { animation: rapid-slot-light 0.4s linear infinite; }
@@ -113,7 +113,7 @@
             flex-shrink: 0;
         }
 
-        .all-flip-btn { position: relative; width: 100%; height: 44px; padding: 0; background: linear-gradient(135deg, #ffe4e6, #fecdd3); color: #e11d48; border: 2px solid #fb7185; border-radius: 8px; cursor: pointer; font-size: 16px; font-family: 'Memoment', sans-serif; display: flex; align-items: center; justify-content: center; transition: transform 0.2s ease, background 0.2s ease; overflow: hidden; animation: ultra-smooth-glow 4s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+        .all-flip-btn { position: relative; width: 100%; height: 44px; padding: 0; background: linear-gradient(135deg, #ffe4e6, #fecdd3); color: #e11d48; border: 2px solid #fb7185; border-radius: 8px; cursor: pointer; font-size: 16px; font-family: 'MemomentKkukkukk', sans-serif; display: flex; align-items: center; justify-content: center; transition: transform 0.2s ease, background 0.2s ease; overflow: hidden; animation: ultra-smooth-glow 4s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
         .all-flip-btn .btn-text { position: relative; z-index: 3; }
         .all-flip-btn::before { content: ''; position: absolute; top: 0; left: -150%; width: 50%; height: 100%; background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.65) 50%, rgba(255,255,255,0) 100%); transform: skewX(-25deg); animation: shimmer-glow 3.5s ease-in-out infinite; z-index: 2; }
         .all-flip-btn:hover { transform: translateY(-1px); background: linear-gradient(135deg, #fecdd3, #fda4af); }
@@ -143,7 +143,7 @@
         .input-group { display: flex; gap: 4px; margin-bottom: 6px; width: 100%; }
         .input-bar { flex: 1; min-width: 0; background: #ffffff; color: #db2777; border: 1px solid #FFC9E8; border-radius: 6px; padding: 6px; font-size: 13px; }
         .control-btns { display: flex; gap: 4px; flex-shrink: 0; }
-        .add-btn, .clear-btn, .preset-btn, .shuffle-btn, .reset-page-btn { cursor: pointer; font-family: 'Memoment', sans-serif; }
+        .add-btn, .clear-btn, .preset-btn, .shuffle-btn, .reset-page-btn { cursor: pointer; font-family: 'MemomentKkukkukk', sans-serif; }
         .add-btn { background: linear-gradient(180deg, #fbcfe8, #FF96D3); color: white; border: none; padding: 0 10px; border-radius: 6px; }
         .clear-btn { background: #ffffff; color: #db2777; border: 1px solid #FFC9E8; padding: 0 10px; border-radius: 6px; }
         .preset-btn { width: 100%; background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e40af; border: 1px solid #60a5fa; padding: 7px; border-radius: 6px; margin-bottom: 6px; }

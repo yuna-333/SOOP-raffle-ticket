@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>이비디자인 100칸 방송용 뽑기판</title>
+    <style>
+        /* 폰트 정의: 학교안심 둥근미소 */
+        @font-face {
+            font-family: 'SchoolSafetyRoundedSmile';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimDunggeunmisoTTF-B.woff2') format('woff2');
+            font-weight: normal;
+            font-display: swap;
+        }
+
+        * { box-sizing: border-box; }
+
+        body { 
+            background-color: rgba(0,0,0,0);
+            color: white; 
+            font-family: 'SchoolSafetyRoundedSmile', 'Malgun Gothic', sans-serif; 
+            font-weight: normal; 
+            display: flex; 
+            justify-content: flex-start; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+            padding-left: 20px;
+            overflow: hidden; 
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: row; 
+            background: rgba(0,0,0,0);
+            padding: 10px;
+            border-radius: 20px;
+            align-items: flex-start; 
+        }
+
+        .broadcast-area {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            transition: opacity 0.3s ease; 
+            opacity: 1;
+        }
+
+        .grid-container { 
+            display: grid; 
+            grid-template-columns: repeat(10, 1fr); 
+            gap: 5px; 
+            width: 450px; 
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+            opacity: 1;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .grid-container.collapsed {
+            transform: scaleX(0);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .toggle-bar-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start; 
+            height: 395px;
+            width: 12px; 
+            margin: 0 8px;
+            flex-shrink: 0;
+        }
+
+        .toggle-btn {
+            width: 12px;
+            height: 30px; 
+            background: linear-gradient(180deg, #fff1f2, #fbcfe8);
+            border: 1px solid #FFC9E8;
+            border-radius: 4px;
+            color: #db2777;
+            cursor: pointer;
+            font-size: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(219, 39, 119, 0.1);
+            transition: all 0.2s ease;
+            user-select: none;
+            padding: 0;
+        }
+        .toggle-btn:hover { background: #FFC9E8; color: white; }
+
+        .card-container { perspective: 1000px; width: 100%; height: 35px; cursor: pointer; user-select: none; }
+        .card { width: 100%; height: 100%; position: relative; transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); transform-style: preserve-3d; transform-origin: center center; }
+        .card.flipped { transform: rotateY(180deg); }
+        .card-face { position: absolute; width: 100%; height: 100%; border-radius: 6px; display: flex; justify-content: center; align-items: center; font-size: 16px; backface-visibility: hidden; border: 1px solid transparent; font-family: 'SchoolSafetyRoundedSmile', sans-serif; top: 0; left: 0; }
+        .card-front { background: linear-gradient(135deg, #fff1f2, #fbcfe8); box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.8), 0 0 4px rgba(244, 114, 182, 0.3); border-color: rgba(255, 255, 255, 0.6); color: #db2777; position: relative; overflow: hidden; }
+        .card-front::after { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, rgba(255,0,128,0) 30%, rgba(255,255,255,0.8) 50%, rgba(0,128,255,0) 70%); transform: rotate(45deg) translate(-150%, -150%); transition: none; pointer-events: none; }
+        .card.slot-glow .card-front::after { animation: rapid-slot-light 0.4s linear infinite; }
+        @keyframes rapid-slot-light { 0% { transform: rotate(45deg) translate(-100%, -100%); } 100% { transform: rotate(45deg) translate(100%, 100%); } }
+        .card-back { transform: rotateY(180deg); text-align: center; display: flex; justify-content: center; align-items: center; font-size: 14px; white-space: nowrap; text-shadow: 0 0 2px rgba(0, 0, 0, 0.2); }
+
+        .sidebar {
+            width: 250px;
+            background: linear-gradient(135deg, #fff1f2, #fbcfe8);
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .all-flip-btn { position: relative; width: 100%; height: 44px; padding: 0; background: linear-gradient(135deg, #ffe4e6, #fecdd3); color: #e11d48; border: 2px solid #fb7185; border-radius: 8px; cursor: pointer; font-size: 16px; font-family: 'SchoolSafetyRoundedSmile', sans-serif; display: flex; align-items: center; justify-content: center; transition: transform 0.2s ease, background 0.2s ease; overflow: hidden; animation: ultra-smooth-glow 4s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+        .all-flip-btn .btn-text { position: relative; z-index: 3; }
+        .all-flip-btn::before { content: ''; position: absolute; top: 0; left: -150%; width: 50%; height: 100%; background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.65) 50%, rgba(255,255,255,0) 100%); transform: skewX(-25deg); animation: shimmer-glow 3.5s ease-in-out infinite; z-index: 2; }
+        .all-flip-btn:hover { transform: translateY(-1px); background: linear-gradient(135deg, #fecdd3, #fda4af); }
+        .all-flip-btn:active { transform: translateY(1px); }
+        @keyframes shimmer-glow { 0% { left: -150%; } 25% { left: 150%; } 100% { left: 150%; } }
+        @keyframes ultra-smooth-glow { 0%, 100% { box-shadow: 0 0 6px rgba(225, 29, 72, 0.15); } 50% { box-shadow: 0 0 22px rgba(225, 29, 72, 0.75); } }
+
+        .prize-header { display: flex; justify-content: center; align-items: center; border-bottom: 2px dashed #FFA1D8; padding-bottom: 8px; margin: 0; }
+        .prize-title { font-size: 20px; color: #db2777; margin: 0; }
+        .prize-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; max-height: 280px; overflow-y: auto; }
+        .prize-item { background: #FFC9E8; padding: 6px 10px; border-radius: 6px; font-size: 16px; border-left: 4px solid #FFC9E8; display: flex; gap: 5px; align-items: center; }
+        .prize-item.rank-1 { border-left-color: #db2777; }
+        .prize-item.rank-2 { border-left-color: #f472b6; }
+        .prize-item.rank-3 { border-left-color: #FFB8E1; }
+        .rank-badge { color: #f472b6; min-width: 52px; display: flex; gap: 2px; align-items: center; }
+        .prize-item.rank-1 .rank-badge { color: ##f472b6; }
+        .prize-name { color: #db2777; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+        .admin-wrapper { width: 250px; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), width 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease; opacity: 1; overflow: hidden; flex-shrink: 0; }
+        .admin-wrapper.collapsed { width: 0px; opacity: 0; transform: scaleX(0); pointer-events: none; }
+        .admin-answer-section { width: 250px; background: linear-gradient(135deg, #fff1f2, #fbcfe8); padding: 15px; border-radius: 12px; border: 2px dashed #db2777; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 0 15px rgba(219, 39, 119, 0.2); }
+        .answer-title { font-size: 14px; color: #db2777; margin: 0; text-align: center; line-height: 1.4; border-bottom: 1px solid rgba(219, 39, 119, 0.2); padding-bottom: 5px; }
+        .opacity-control-box { background: rgba(255, 255, 255, 0.6); padding: 8px; border-radius: 8px; border: 1px solid #FFC9E8; margin-bottom: 2px; }
+        .opacity-control-box label { display: flex; justify-content: space-between; font-size: 12px; color: #db2777; margin-bottom: 4px; }
+        .opacity-slider { width: 100%; -webkit-appearance: none; background: #ffe4e6; height: 6px; border-radius: 3px; outline: none; cursor: pointer; }
+        .opacity-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #db2777; cursor: pointer; }
+        .admin-section-inner h5 { margin: 0 0 6px 0; color: #db2777; font-size: 13px; font-weight: normal; }
+        .input-group { display: flex; gap: 4px; margin-bottom: 6px; width: 100%; }
+        .input-bar { flex: 1; min-width: 0; background: #ffffff; color: #db2777; border: 1px solid #FFC9E8; border-radius: 6px; padding: 6px; font-size: 13px; }
+        .control-btns { display: flex; gap: 4px; flex-shrink: 0; }
+        .add-btn, .clear-btn, .preset-btn, .shuffle-btn { cursor: pointer; font-family: 'SchoolSafetyRoundedSmile', sans-serif; }
+        .add-btn { background: linear-gradient(180deg, #fbcfe8, #FF96D3); color: white; border: none; padding: 0 10px; border-radius: 6px; }
+        .clear-btn { background: #ffffff; color: #db2777; border: 1px solid #FFC9E8; padding: 0 10px; border-radius: 6px; }
+        .preset-btn { width: 100%; background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e40af; border: 1px solid #60a5fa; padding: 7px; border-radius: 6px; margin-bottom: 6px; }
+        .shuffle-btn { width: 100%; background: linear-gradient(180deg, #fbcfe8, #FF96D3); color: white; border: none; padding: 8px; border-radius: 6px; }
+        .answer-grid { display: flex; flex-direction: column; gap: 5px; max-height: 150px; overflow-y: auto; font-size: 13px; color: #db2777; margin-top: 5px; border-top: 1px dashed rgba(219, 39, 119, 0.3); padding-top: 8px; }
+        .answer-row { display: flex; justify-content: space-between; align-items: center; background: rgba(255, 255, 255, 0.7); padding: 6px 10px; border-radius: 6px; }
+        .ans-rank { color: #d01567; }
+        .ans-num { color: #ffffff; background: #db2777; padding: 2px 7px; border-radius: 4px; font-size: 12px; }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <div class="broadcast-area" id="broadcastArea">
+        <div class="grid-container" id="board"></div>
+
+        <div class="toggle-bar-container">
+            <button class="toggle-btn" id="toggleBtn" onclick="toggleBoard()">◀</button>
+        </div>
+
+        <div class="sidebar">
+            <button class="all-flip-btn" id="megaFlipBtn" onclick="triggerMegaFlip()">
+                <span class="btn-text">⚡판찢 10000개</span>
+            </button>
+            <div class="prize-header">
+                <h3 class="prize-title">💖100개 뽑기판💖</h3>
+            </div>
+            <ul class="prize-list" id="prizeList"></ul>
+        </div>
+    </div>
+
+    <div class="toggle-bar-container">
+        <button class="toggle-btn" id="adminToggleBtn" onclick="toggleAdminMaster()">▶</button>
+    </div>
+
+    <div class="admin-wrapper" id="adminWrapper">
+        <div class="admin-answer-section">
+            <p class="answer-title">👁️‍🗨️ 스트리머 마스터 룸</p>
+            <div class="opacity-control-box">
+                <label><span>✨ 방송 UI 투명도</span><span id="opacityVal">100%</span></label>
+                <input type="range" id="opacitySlider" class="opacity-slider" min="0" max="100" value="100" oninput="changeOpacity(this.value)">
+            </div>
+            <div class="admin-section-inner">
+                <h5>당첨 추가 및 관리</h5>
+                <div class="input-group">
+                    <input type="text" id="prizeInput" class="input-bar" placeholder="상품명 입력 후 추가" onkeydown="handleKeyPress(event)">
+                    <div class="control-btns">
+                        <button class="add-btn" onclick="addPrize()">추가</button>
+                        <button class="clear-btn" onclick="clearPrizes()">리셋</button>
+                    </div>
+                </div>
+                <button class="preset-btn" onclick="loadPresetPrizes()">⭐ 1~5등 프리셋 가져오기</button>
+                <button class="shuffle-btn" onclick="shuffleAndReset()">뽑기판 시작하기</button>
+            </div>
+            <div class="answer-grid" id="answerGrid">
+                <div style="text-align: center; color: #f472b6; font-size: 12px; padding: 15px 0; line-height: 1.4;">위의 셔플 버튼을 누르면<br>당첨 번호 정답지가 출력됩니다.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const board = document.getElementById('board');
+    const adminWrapper = document.getElementById('adminWrapper');
+    const broadcastArea = document.getElementById('broadcastArea');
+    const opacityVal = document.getElementById('opacityVal');
+    const prizeList = document.getElementById('prizeList');
+    const prizeInput = document.getElementById('prizeInput');
+    const answerGrid = document.getElementById('answerGrid');
+    const toggleBtn = document.getElementById('toggleBtn');
+    const adminToggleBtn = document.getElementById('adminToggleBtn');
+    const totalSlots = 100;
+    let prizeArray = [];
+    let currentRewards = [];
+    let isAnimating = false;
+
+    // 오디오 파일 경로는 환경에 맞게 수정하여 사용하세요.
+    const flipSound = new Audio("flip.mp3");
+    const winSound = new Audio("win.mp3");
+
+    function initAudioUnlock() {
+        const unlock = () => {
+            flipSound.play().then(() => { flipSound.pause(); flipSound.currentTime = 0; }).catch(e => {});
+            winSound.play().then(() => { winSound.pause(); winSound.currentTime = 0; }).catch(e => {});
+            document.removeEventListener('click', unlock);
+        };
+        document.addEventListener('click', unlock);
+    }
+
+    function changeOpacity(val) {
+        broadcastArea.style.opacity = val / 100;
+        opacityVal.innerText = val + "%";
+    }
+
+    function toggleBoard() {
+        board.classList.toggle('collapsed');
+        toggleBtn.innerText = board.classList.contains('collapsed') ? "▶" : "◀";
+    }
+
+    function toggleAdminMaster() {
+        adminWrapper.classList.toggle('collapsed');
+        adminToggleBtn.innerText = adminWrapper.classList.contains('collapsed') ? "◀" : "▶";
+    }
+
+    function handleKeyPress(e) { if (e.key === 'Enter') addPrize(); }
+
+    function addPrize() {
+        const value = prizeInput.value.trim();
+        if (!value) return;
+        if (prizeArray.length >= totalSlots) { alert(`최대 ${totalSlots}개까지만 등록할 수 있습니다.`); return; }
+        prizeArray.push(value);
+        prizeInput.value = "";
+        renderPrizeList();
+    }
+
+    function loadPresetPrizes() {
+        prizeArray = ["정성방셀", "일반방셀", "역팬50개", "볼하트", "윙크"];
+        renderPrizeList();
+    }
+
+    function renderPrizeList() {
+        prizeList.innerHTML = "";
+        if (prizeArray.length === 0) {
+            prizeList.innerHTML = "<li class='prize-item' style='color:#db2777; font-weight:bold; justify-content:center;'>준비 중 입니다.</li>";
+            return;
+        }
+        prizeArray.forEach((prize, index) => {
+            const li = document.createElement('li');
+            li.classList.add('prize-item');
+            if (index < 3) li.classList.add(`rank-${index + 1}`);
+            let emoji = index === 0 ? "🩷" : index === 1 ? "🩷" : index === 2 ? "🩷" : index === 3 ? "🩷" : "🩷";
+            li.innerHTML = `<span class="rank-badge">${emoji} ${index + 1}등</span> <span class="prize-name">${prize}</span>`;
+            prizeList.appendChild(li);
+        });
+    }
+
+    function clearPrizes() { prizeArray = []; renderPrizeList(); renderAnswerSheet(); }
+
+    function shuffleAndReset() {
+        if (isAnimating) return;
+        currentRewards = Array(totalSlots).fill("꽝");
+        for (let i = 0; i < prizeArray.length; i++) currentRewards[i] = `${i + 1}등`;
+        for (let i = currentRewards.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [currentRewards[i], currentRewards[j]] = [currentRewards[j], currentRewards[i]];
+        }
+        renderAnswerSheet();
+        board.innerHTML = "";
+        for (let i = 1; i <= totalSlots; i++) {
+            const cardContainer = document.createElement('div');
+            cardContainer.classList.add('card-container');
+            cardContainer.setAttribute('data-index', i);
+            const card = document.createElement('div');
+            card.classList.add('card');
+            const cardFront = document.createElement('div');
+            cardFront.classList.add('card-face', 'card-front');
+            cardFront.innerText = i;
+            const cardBack = document.createElement('div');
+            cardBack.classList.add('card-face', 'card-back');
+            const resultText = currentRewards[i - 1];
+            cardBack.innerText = resultText;
+            if (resultText !== "꽝") {
+                if (resultText === "1등") { cardBack.style.background = "#FEF08A"; cardBack.style.borderColor = "#EAB308"; cardBack.style.color = "#854D0E"; }
+                else if (resultText === "2등") { cardBack.style.background = "#FBCFE8"; cardBack.style.borderColor = "#F472B6"; cardBack.style.color = "#9D174D"; }
+                else if (resultText === "3등") { cardBack.style.background = "#CFFAFE"; cardBack.style.borderColor = "#22D3EE"; cardBack.style.color = "#155E75"; }
+                else if (resultText === "4등") { cardBack.style.background = "#E9D5FF"; cardBack.style.borderColor = "#C084FC"; cardBack.style.color = "#6B21A8"; }
+                else if (resultText === "5등") { cardBack.style.background = "#FFEDD5"; cardBack.style.borderColor = "#FB923C"; cardBack.style.color = "#9A3412"; }
+            } else {
+                cardBack.style.background = "rgba(255, 241, 242, 0.48)"; cardBack.style.borderColor = "rgba(255, 241, 242, 0.5)"; cardBack.style.color = "#E5E7EB";
+            }
+            card.appendChild(cardFront);
+            card.appendChild(cardBack);
+            cardContainer.appendChild(card);
+            cardContainer.addEventListener('click', () => {
+                if (isAnimating) return;
+                if (!card.classList.contains('flipped')) {
+                    if (resultText !== "꽝") { winSound.currentTime = 0; winSound.play().catch(e=>{}); }
+                    else { flipSound.currentTime = 0; flipSound.play().catch(e=>{}); }
+                }
+                card.classList.toggle('flipped');
+            });
+            board.appendChild(cardContainer);
+        }
+    }
+
+    function generateSpiralOrder() {
+        let spiral = [];
+        let top = 0, bottom = 9, left = 0, right = 9;
+        while (top <= bottom && left <= right) {
+            for (let i = left; i <= right; i++) spiral.push({row: top, col: i});
+            top++;
+            for (let i = top; i <= bottom; i++) spiral.push({row: i, col: right});
+            right--;
+            if (top <= bottom) {
+                for (let i = right; i >= left; i--) spiral.push({row: bottom, col: i});
+                bottom--;
+            }
+            if (left <= right) {
+                for (let i = bottom; i >= top; i--) spiral.push({row: i, col: left});
+                left++;
+            }
+        }
+        return spiral;
+    }
+
+    function triggerMegaFlip() {
+        if (isAnimating) return;
+        const cards = document.querySelectorAll('.card');
+        let hasUnflipped = false;
+        cards.forEach(card => { if (!card.classList.contains('flipped')) hasUnflipped = true; });
+        if (!hasUnflipped) {
+            flipSound.currentTime = 0; flipSound.play().catch(e=>{});
+            cards.forEach(card => card.classList.remove('flipped'));
+            return;
+        }
+        isAnimating = true;
+        cards.forEach(card => card.classList.add('slot-glow'));
+        winSound.currentTime = 0;
+        winSound.play().catch(e=>{});
+        setTimeout(() => {
+            cards.forEach(card => card.classList.remove('slot-glow'));
+            const spiralSequence = generateSpiralOrder();
+            spiralSequence.forEach((pos, seqIndex) => {
+                const targetBoardIndex = (pos.row * 10) + pos.col + 1;
+                const targetCardContainer = board.querySelector(`.card-container[data-index="${targetBoardIndex}"]`);
+                if (targetCardContainer) {
+                    const card = targetCardContainer.querySelector('.card');
+                    setTimeout(() => {
+                        if (!card.classList.contains('flipped')) {
+                            card.classList.add('flipped');
+                            if (seqIndex % 3 === 0) {
+                                flipSound.currentTime = 0;
+                                flipSound.play().catch(e=>{});
+                            }
+                        }
+                    }, seqIndex * 25);
+                }
+            });
+            setTimeout(() => { isAnimating = false; }, 2600);
+        }, 1200);
+    }
+
+    function renderAnswerSheet() {
+        answerGrid.innerHTML = "";
+        let targetCount = 0;
+        for (let r = 1; r <= prizeArray.length; r++) {
+            const foundIndex = currentRewards.indexOf(`${r}등`);
+            if (foundIndex !== -1) {
+                targetCount++;
+                const row = document.createElement('div');
+                row.classList.add('answer-row');
+                row.innerHTML = `<span class="ans-rank">🎯 ${r}등</span> <span class="ans-num">${foundIndex + 1}번</span>`;
+                answerGrid.appendChild(row);
+            }
+        }
+        if (targetCount === 0) {
+            answerGrid.innerHTML = "<div style='text-align: center; color: #db2777; font-size: 13px; padding: 20px 0; line-height:1.4;'>현재 배치된 당첨 상품이 없습니다.<br>프리셋 가져오기 또는 상품을 추가하여<br>'뽑기판 시작하기' 버튼을 눌러주세요.<br><br>뽑기판 제작 [카카오톡채널 이비디자인]</div>";
+        }
+    }
+
+    window.onload = function() { initAudioUnlock(); renderPrizeList(); shuffleAndReset(); }
+</script>
+</body>
+</html>

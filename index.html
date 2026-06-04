@@ -128,7 +128,6 @@
         .prize-item.rank-2 { border-left-color: #f472b6; }
         .prize-item.rank-3 { border-left-color: #FFB8E1; }
         .rank-badge { color: #f472b6; min-width: 52px; display: flex; gap: 2px; align-items: center; }
-        .prize-item.rank-1 .rank-badge { color: ##f472b6; }
         .prize-name { color: #db2777; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
         .admin-wrapper { width: 250px; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), width 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease; opacity: 1; overflow: hidden; flex-shrink: 0; }
@@ -143,11 +142,13 @@
         .input-group { display: flex; gap: 4px; margin-bottom: 6px; width: 100%; }
         .input-bar { flex: 1; min-width: 0; background: #ffffff; color: #db2777; border: 1px solid #FFC9E8; border-radius: 6px; padding: 6px; font-size: 13px; }
         .control-btns { display: flex; gap: 4px; flex-shrink: 0; }
-        .add-btn, .clear-btn, .preset-btn, .shuffle-btn { cursor: pointer; font-family: 'SchoolSafetyRoundedSmile', sans-serif; }
+        .add-btn, .clear-btn, .preset-btn, .shuffle-btn, .reset-page-btn { cursor: pointer; font-family: 'SchoolSafetyRoundedSmile', sans-serif; }
         .add-btn { background: linear-gradient(180deg, #fbcfe8, #FF96D3); color: white; border: none; padding: 0 10px; border-radius: 6px; }
         .clear-btn { background: #ffffff; color: #db2777; border: 1px solid #FFC9E8; padding: 0 10px; border-radius: 6px; }
         .preset-btn { width: 100%; background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e40af; border: 1px solid #60a5fa; padding: 7px; border-radius: 6px; margin-bottom: 6px; }
-        .shuffle-btn { width: 100%; background: linear-gradient(180deg, #fbcfe8, #FF96D3); color: white; border: none; padding: 8px; border-radius: 6px; }
+        .shuffle-btn { width: 100%; background: linear-gradient(180deg, #fbcfe8, #FF96D3); color: white; border: none; padding: 8px; border-radius: 6px; margin-bottom: 6px;}
+        .reset-page-btn { width: 100%; background: #ffffff; color: #db2777; border: 1px solid #FFC9E8; padding: 8px; border-radius: 6px; font-size: 13px; }
+        .reset-page-btn:hover { background: #FFC9E8; color: white; }
         .answer-grid { display: flex; flex-direction: column; gap: 5px; max-height: 150px; overflow-y: auto; font-size: 13px; color: #db2777; margin-top: 5px; border-top: 1px dashed rgba(219, 39, 119, 0.3); padding-top: 8px; }
         .answer-row { display: flex; justify-content: space-between; align-items: center; background: rgba(255, 255, 255, 0.7); padding: 6px 10px; border-radius: 6px; }
         .ans-rank { color: #d01567; }
@@ -159,11 +160,9 @@
 <div class="main-container">
     <div class="broadcast-area" id="broadcastArea">
         <div class="grid-container" id="board"></div>
-
         <div class="toggle-bar-container">
             <button class="toggle-btn" id="toggleBtn" onclick="toggleBoard()">◀</button>
         </div>
-
         <div class="sidebar">
             <button class="all-flip-btn" id="megaFlipBtn" onclick="triggerMegaFlip()">
                 <span class="btn-text">⚡판찢 12486개</span>
@@ -197,6 +196,7 @@
                 </div>
                 <button class="preset-btn" onclick="loadPresetPrizes()">⭐ 1~5등 프리셋 가져오기</button>
                 <button class="shuffle-btn" onclick="shuffleAndReset()">뽑기판 시작하기</button>
+                <button class="reset-page-btn" onclick="location.reload()">🔄 전체 새로고침 (초기화)</button>
             </div>
             <div class="answer-grid" id="answerGrid">
                 <div style="text-align: center; color: #f472b6; font-size: 12px; padding: 15px 0; line-height: 1.4;">위의 셔플 버튼을 누르면<br>당첨 번호 정답지가 출력됩니다.</div>
@@ -273,7 +273,7 @@
             const li = document.createElement('li');
             li.classList.add('prize-item');
             if (index < 3) li.classList.add(`rank-${index + 1}`);
-            let emoji = index === 0 ? "🩷" : index === 1 ? "🩷" : index === 2 ? "🩷" : index === 3 ? "🩷" : "🩷";
+            let emoji = "🩷";
             li.innerHTML = `<span class="rank-badge">${emoji} ${index + 1}등</span> <span class="prize-name">${prize}</span>`;
             prizeList.appendChild(li);
         });

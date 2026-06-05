@@ -123,18 +123,19 @@
             box-shadow: 0 4px 10px rgba(255, 77, 133, 0.15);
         }
 
-
         .all-flip-btn { position: relative; width: 100%; height: 44px; padding: 0; background: linear-gradient(135deg, #FFF0F4, #FFB0C7); color: #A10035; border: 1px solid #FF4D85; border-radius: 8px; cursor: pointer; font-size: 16px; font-family: 'GMarketSans', sans-serif; display: flex; align-items: center; justify-content: center; transition: transform 0.2s ease, background 0.2s ease; overflow: hidden; animation: ultra-smooth-glow 2s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
         .all-flip-btn .btn-text { position: relative; z-index: 3; }
         .all-flip-btn::before { content: ''; position: absolute; top: 0; left: -150%; width: 50%; height: 100%; background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%); transform: skewX(-25deg); animation: shimmer-glow 3.5s ease-in-out infinite; z-index: 2; }
+        
         .all-flip-btn:hover { transform: translateY(-1px); background: linear-gradient(135deg, #FFD1DC, #FF4D85); color: white; }
         .all-flip-btn:active { transform: translateY(1px); }
+        
         @keyframes shimmer-glow { 0% { left: -150%; } 25% { left: 150%; } 100% { left: 150%; } }
         @keyframes ultra-smooth-glow { 0%, 100% { box-shadow: 0 0 6px rgba(255, 77, 133, 0.3); } 50% { box-shadow: 0 0 14px rgba(255, 77, 133, 0.7); } }
 
         .prize-header { display: flex; justify-content: center; align-items: center; border-bottom: 2px dashed #FF4D85; padding-bottom: 8px; margin: 0; min-height: 40px;}
         .prize-title { font-family: 'GMarketSans', sans-serif; font-size: 24px; color: #D81B60; text-shadow: 0 0 3px #fff, 0 0 3px #fff, 0 0 3px #fff, 0 0 3px #fff, 0 0 3px #fff, 0 0 3px #fff, 0 0 3px #fff, 0 0 3px #fff, 0 0 3px #fff, 0 0 3px #fff, 0 0 3px #fff, 0 0 3px #fff, 0 0 3px #fff, 0 0 3px #fff, 0 0 8px #FF6699; margin: 0; font-weight: bold; }
-		
+        
         .prize-banner-img { width: 120%; max-width: 240px; max-height: 100px; object-fit: contain; display: none; }
 
         .prize-list { font-family: 'GMarketSans', sans-serif; list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 5px; height: auto; }
@@ -150,9 +151,7 @@
         .admin-wrapper { width: 250px; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), width 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease; opacity: 1; overflow: hidden; flex-shrink: 0; }
         .admin-wrapper.collapsed { width: 0px; opacity: 0; transform: scaleX(0); pointer-events: none; }
         
-        #mainContainer.admin-swapped .admin-wrapper.collapsed {
-            width: 250px;
-        }
+        #mainContainer.admin-swapped .admin-wrapper.collapsed { width: 250px; }
 
         .admin-answer-section { 
             width: 250px; 
@@ -165,6 +164,7 @@
             gap: 10px; 
             box-shadow: 0 0 15px rgba(255, 77, 133, 0.2); 
             font-family: 'NexonLv1Gothic', 'Malgun Gothic', sans-serif;
+            position: relative;
         }
         
         .answer-title { font-size: 14px; color: #A10035; margin: 0; text-align: center; line-height: 1.4; border-bottom: 1px solid rgba(255, 77, 133, 0.3); padding-bottom: 5px; font-weight: bold; }
@@ -172,6 +172,12 @@
         .opacity-control-box label { display: flex; justify-content: space-between; font-size: 12px; color: #A10035; margin-bottom: 4px; font-weight: bold; }
         .opacity-slider { width: 100%; -webkit-appearance: none; background: #FFF0F4; height: 6px; border-radius: 3px; outline: none; cursor: pointer; border: 1px solid #FF8CAE; }
         .opacity-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #FF4D85; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+        
+
+        .settings-toggle-btn { width: 100%; background: #FFF0F4; color: #A10035; border: 1px dashed #FF8CAE; padding: 6px; border-radius: 8px; font-size: 12px; cursor: pointer; font-family: 'NexonLv1Gothic', sans-serif; font-weight: bold; transition: all 0.2s ease; margin-bottom: 4px; }
+        .settings-toggle-btn:hover { background: #FFD1DC; border-style: solid; }
+
+
         .admin-section-inner h5 { margin: 0 0 6px 0; color: #A10035; font-size: 13px; font-weight: bold; }
         .input-group { display: flex; gap: 4px; margin-bottom: 6px; width: 100%; }
         .input-bar { flex: 1; min-width: 0; background: #ffffff; color: #A10035; border: 1px solid #FF8CAE; border-radius: 6px; padding: 6px; font-size: 13px; font-family: 'NexonLv1Gothic', sans-serif; }
@@ -179,7 +185,7 @@
         .input-bar[type="file"] { padding: 3px; font-size: 11px; cursor: pointer; }
         
         .control-btns { display: flex; gap: 4px; flex-shrink: 0; }
-        .add-btn, .clear-btn, .preset-btn, .shuffle-btn, .reset-page-btn { cursor: pointer; font-family: 'NexonLv1Gothic', sans-serif; font-weight: bold; }
+        .add-btn, .clear-btn, .preset-btn, .shuffle-btn { cursor: pointer; font-family: 'NexonLv1Gothic', sans-serif; font-weight: bold; }
         .add-btn { background: linear-gradient(180deg, #FF8CAE, #FF4D85); color: white; border: none; padding: 0 10px; border-radius: 6px; }
         .clear-btn { background: #ffffff; color: #A10035; border: 1px solid #FF4D85; padding: 0 10px; border-radius: 6px; }
         
@@ -191,13 +197,15 @@
         .shuffle-btn { width: 100%; background: linear-gradient(180deg, #FF4D85, #E6195E); color: white; text-shadow: 0 0 5px rgba(0,0,0,0.3); border: 1px solid #D81B60; padding: 8px; border-radius: 6px; margin-bottom: 6px;}
         .shuffle-btn:hover { background: linear-gradient(180deg, #FFD1DC, #FF4D85); color: #A10035; text-shadow: none; }
         
-        .reset-page-btn { width: 100%; background: #DC3545; color: #fff; border: 1px solid #C82333; padding: 8px; border-radius: 6px; font-size: 13px; }
-        .reset-page-btn:hover { background: #FFF0F4; color: #DC3545; border-color: #DC3545; }
-        
         .answer-grid { display: flex; flex-direction: column; gap: 5px; height: auto; font-size: 13px; color: #A10035; margin-top: 5px; border-top: 1px dashed rgba(255, 77, 133, 0.5); padding-top: 8px; }
         .answer-row { display: flex; justify-content: space-between; align-items: center; background: rgba(255, 255, 255, 0.9); padding: 6px 10px; border-radius: 6px; border: 1px solid #FFD1DC; }
         .ans-rank { color: #A10035; font-weight: bold; }
         .ans-num { color: #ffffff; background: #FF4D85; padding: 2px 7px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+
+        .modal-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 240, 244, 0.85); backdrop-filter: blur(3px); display: flex; justify-content: center; align-items: center; z-index: 100; border-radius: 12px; }
+        .modal-content { background: linear-gradient(135deg, #ffffff, #FFF0F4); padding: 15px; border-radius: 10px; border: 2px solid #FF4D85; box-shadow: 0 4px 15px rgba(255, 77, 133, 0.3); width: 230px; font-family: 'NexonLv1Gothic', sans-serif; }
+        .modal-input-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+        .modal-input-row label { color: #A10035; font-weight: bold; width: 32px; flex-shrink: 0; font-size: 13px; text-align: right; }
     </style>
 </head>
 <body>
@@ -219,7 +227,7 @@
             <ul class="prize-list" id="prizeList"></ul>
             
             <button class="all-flip-btn" id="megaFlipBtn" onclick="triggerMegaFlip()">
-                <span class="btn-text">⚡판찢 12486개</span>
+                <span class="btn-text" id="megaFlipText">👑판찢 12486개</span>
             </button>
         </div>
     </div>
@@ -229,15 +237,16 @@
             <button class="toggle-btn" id="adminToggleBtn" onclick="toggleAdminMaster()">＜</button>
         </div>
         <div class="admin-wrapper" id="adminWrapper" style="order: 2;">
-            <div class="admin-answer-section">
+            <div class="admin-answer-section" id="adminSection">
                 <p class="answer-title">👁️‍🗨️ 스트리머 설정창</p>
                 <div class="opacity-control-box">
                     <label><span>✨ 방송 UI 투명도</span><span id="opacityVal">100%</span></label>
                     <input type="range" id="opacitySlider" class="opacity-slider" min="0" max="100" value="100" oninput="changeOpacity(this.value)">
                 </div>
-                
-                <div class="admin-section-inner">
 
+                <button class="settings-toggle-btn" id="innerSettingsToggle" onclick="toggleInnerSettings()">▲ 세부 설정 접기</button>
+                
+                <div class="admin-section-inner" id="innerSettings">
                     <h5>상단 타이틀 설정</h5>
                     <div class="input-group">
                         <input type="text" id="titleInput" class="input-bar" value="🩷100개 뽑기판🩷" placeholder="타이틀 문구 입력" oninput="updateTitleText()">
@@ -247,23 +256,40 @@
                     </div>
                     <button class="preset-btn title-toggle-btn" id="toggleTitleBtn" onclick="toggleTitleMode()">이미지 배너로 변경하기</button>
 
+                    <h5 style="margin-top: 12px;">판찢&전체 확인 버튼 설정</h5>
+                    <div class="input-group">
+                        <input type="text" id="megaFlipInput" class="input-bar" value="👑판찢 12486개" placeholder="버튼 문구 입력" oninput="updateMegaFlipText()">
+                    </div>
+
                     <h5 style="margin-top: 12px;">당첨 추가 및 관리</h5>
                     <div class="input-group">
-                        <input type="text" id="prizeInput" class="input-bar" placeholder="상품명 입력 후 추가" onkeydown="handleKeyPress(event)">
-                        <div class="control-btns">
-                            <button class="add-btn" onclick="addPrize()">추가</button>
-                            <button class="clear-btn" onclick="clearPrizes()">리셋</button>
-                        </div>
+                        <button class="add-btn" style="flex: 1; padding: 8px; font-size: 13px;" onclick="openPrizeModal()">🎁 상품 입력하기</button>
+                        <button class="clear-btn" style="width: 50px;" onclick="clearPrizes()">리셋</button>
                     </div>
                      
                     <button class="preset-btn" onclick="loadPresetPrizes()">⭐ 1~5등 프리셋 가져오기</button>
                     <button class="shuffle-btn" onclick="shuffleAndReset()">뽑기판 시작하기</button>
-                    <button class="preset-btn" style="background: linear-gradient(135deg, #FFF0F4, #FFD1DC); color: #A10035; border-color: #FF8CAE;" onclick="swapPanels()">뽑기판 ⇄ 설정창 좌우 변경</button>
-                    <button class="reset-page-btn" onclick="location.reload()">전체 새로고침<br> (⚠️좌우 포함 초기화 됩니다.)</button>
-                </div>
-                <div class="answer-grid" id="answerGrid">
+                    <button class="preset-btn" style="background: linear-gradient(135deg, #FFF0F4, #FFD1DC); color: #A10035; border-color: #FF8CAE; margin-bottom: 0;" onclick="swapPanels()">뽑기판 ⇄ 설정창 좌우 변경</button>
+                </div> <div class="answer-grid" id="answerGrid">
                     <div style="text-align: center; color: #FF4D85; font-size: 12px; line-height: 1.4;">위의 셔플 버튼을 누르면<br>당첨 번호 정답지가 출력됩니다.</div>
                 </div>
+
+                <div id="prizeModal" class="modal-overlay" style="display: none;">
+                    <div class="modal-content">
+                        <h4 style="color:#A10035; margin-top:0; text-align:center; border-bottom: 1px dashed #FF4D85; padding-bottom: 8px; font-size: 15px;">🎁 등수별 상품 입력</h4>
+                        <div class="modal-input-row"><label>1등</label><input type="text" id="prize1" class="input-bar" placeholder="상품 입력"></div>
+                        <div class="modal-input-row"><label>2등</label><input type="text" id="prize2" class="input-bar" placeholder="상품 입력"></div>
+                        <div class="modal-input-row"><label>3등</label><input type="text" id="prize3" class="input-bar" placeholder="상품 입력"></div>
+                        <div class="modal-input-row"><label>4등</label><input type="text" id="prize4" class="input-bar" placeholder="상품 입력"></div>
+                        <div class="modal-input-row"><label>5등</label><input type="text" id="prize5" class="input-bar" placeholder="상품 입력"></div>
+                        
+                        <div style="display:flex; gap:6px; margin-top:12px;">
+                            <button class="shuffle-btn" style="margin:0; flex:1; padding: 6px;" onclick="applyModalPrizes()">적용하기</button>
+                            <button class="clear-btn" style="flex:1; padding: 6px;" onclick="closePrizeModal()">취소</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -274,7 +300,6 @@
     const adminWrapper = document.getElementById('adminWrapper');
     const opacityVal = document.getElementById('opacityVal');
     const prizeList = document.getElementById('prizeList');
-    const prizeInput = document.getElementById('prizeInput');
     const answerGrid = document.getElementById('answerGrid');
     const toggleBtn = document.getElementById('toggleBtn');
     const adminToggleBtn = document.getElementById('adminToggleBtn');
@@ -284,6 +309,9 @@
     const toggleTitleBtn = document.getElementById('toggleTitleBtn');
     const bannerUpload = document.getElementById('bannerUpload');
     const titleInput = document.getElementById('titleInput');
+    
+    const megaFlipText = document.getElementById('megaFlipText');
+    const megaFlipInput = document.getElementById('megaFlipInput');
     let isImageMode = false;
 
     const totalSlots = 100;
@@ -304,8 +332,24 @@
         document.addEventListener('click', unlock);
     }
 
+    function toggleInnerSettings() {
+        const inner = document.getElementById('innerSettings');
+        const btn = document.getElementById('innerSettingsToggle');
+        if (inner.style.display === 'none') {
+            inner.style.display = 'block';
+            btn.innerText = '▲ 세부 설정 접기';
+        } else {
+            inner.style.display = 'none';
+            btn.innerText = '▼ 세부 설정 열기';
+        }
+    }
+
     function updateTitleText() {
         textTitle.innerText = titleInput.value || "타이틀을 입력하세요";
+    }
+
+    function updateMegaFlipText() {
+        megaFlipText.innerText = megaFlipInput.value || "모든 숫자 확인";
     }
 
     bannerUpload.addEventListener('change', function(e) {
@@ -397,18 +441,25 @@
         updateToggleArrows();
     }
 
-    function handleKeyPress(e) { 
-    if (e.isComposing) return; 
-    if (e.key === 'Enter') addPrize(); 
-}
+    function openPrizeModal() {
+        for(let i = 1; i <= 5; i++) {
+            document.getElementById('prize' + i).value = prizeArray[i - 1] || "";
+        }
+        document.getElementById('prizeModal').style.display = 'flex';
+    }
 
-    function addPrize() {
-        const value = prizeInput.value.trim();
-        if (!value) return;
-        if (prizeArray.length >= totalSlots) { alert(`최대 ${totalSlots}개까지만 등록할 수 있습니다.`); return; }
-        prizeArray.push(value);
-        prizeInput.value = "";
+    function closePrizeModal() {
+        document.getElementById('prizeModal').style.display = 'none';
+    }
+
+    function applyModalPrizes() {
+        prizeArray = [];
+        for(let i = 1; i <= 5; i++) {
+            const val = document.getElementById('prize' + i).value.trim();
+            if(val) prizeArray.push(val);
+        }
         renderPrizeList();
+        closePrizeModal();
     }
 
     function loadPresetPrizes() {
